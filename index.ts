@@ -8,27 +8,19 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigins = [
-    env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase(),
-    'http://localhost:3000',
-];
-
-console.log('🌐 Request Origin:', origin);
+const allowedOrigin = env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase();
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (!origin) {
-            console.warn('❌ CORS blocked: Origin header missing');
             return callback(new Error('Not allowed by CORS'));
         }
 
         const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
-        const isAllowed = allowedOrigins.includes(cleanOrigin);
-
-        if (isAllowed) {
+        if (cleanOrigin === allowedOrigin) {
             callback(null, true);
         } else {
-            console.warn(`❌ CORS blocked: ${origin}`);
+            console.warn(`❌ CORS blocked: ${cleanOrigin} !== ${allowedOrigin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
