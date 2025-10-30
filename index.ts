@@ -8,7 +8,11 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const clientAdoresu: string = String(env.CLIENT_ADDRESS) || '';
+const clientAdoresu: string = env.CLIENT_ADDRESS;
+
+if (!clientAdoresu) {
+    throw new Error('CLIENT_ADDRESS が未設定です');
+}
 
 const corsOptions = {
     origin: clientAdoresu,
