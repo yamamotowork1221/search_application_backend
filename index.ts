@@ -9,20 +9,23 @@ import cors from 'cors';
 const app: Application = express();
 
 const clientAdoresu: string = env.CLIENT_ADDRESS;
-const allowedOrigins = [clientAdoresu.trim()];
+const allowedOrigins = [env.CLIENT_ADDRESS.trim().replace(/\/$/, '')];
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (!origin) {
-            return callback(new Error('Not allowed by CORS'));
+            return callback(new Error('CORS: Origin header missing'));
         }
 
-        const cleanOrigin = origin.replace(/\/$/, '');
-        const isAllowed = allowedOrigins.some(o => o.replace(/\/$/, '') === cleanOrigin);
+        const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
+        const isAllowed = allowedOrigins.some(
+            o => o.replace(/\/$/, '').toLowerCase() === cleanOrigin
+        );
 
         if (isAllowed) {
             callback(null, true);
         } else {
+            console.warn(`❌ CORS blocked: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
