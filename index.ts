@@ -8,14 +8,18 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const corsOptions = {
-    origin: 'https://search-application-frontend.onrender.com',
-    credentials: true,
-};
+app.use((req, res, next) => {
+    const allowedOrigin = 'https://search-application-frontend.onrender.com';
+    const origin = req.headers.origin;
 
-app.options(/.*/, cors(corsOptions));
-
-app.use(cors(corsOptions));
+    if (origin === allowedOrigin) {
+        res.header('Access-Control-Allow-Origin', allowedOrigin);
+        res.header('Access-Control-Allow-Credentials', 'true');
+        next();
+    } else {
+        res.status(403).send('Forbidden');
+    }
+});
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
