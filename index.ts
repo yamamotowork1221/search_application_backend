@@ -10,18 +10,13 @@ const app: Application = express();
 
 const allowedOrigin = 'https://search-application-frontend.onrender.com';
 
-const corsOptions = {
-    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-        if (!origin || origin === allowedOrigin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST'], // フロントエンドから通すメソッドだけ
-};
-
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin && origin !== allowedOrigin) {
+        return res.status(403).json({ error: 'Forbidden origin' });
+    }
+    next();
+});
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
