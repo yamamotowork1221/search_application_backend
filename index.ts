@@ -8,10 +8,17 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigin = env.CLIENT_ADDRESS;
+const allowedOrigins = [env.CLIENT_ADDRESS];
 
 app.use(cors({
-    origin: allowedOrigin
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }));
 
 app.use('/searchservice', searchRoute);
