@@ -1,4 +1,4 @@
-import { search } from '../../src/controllers/searchController.ts'
+import { search } from '../../src/controllers/searchController'
 import express from 'express';
 
 const searchRoute = express.Router();
