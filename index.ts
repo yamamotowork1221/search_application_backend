@@ -9,7 +9,6 @@ import cors from 'cors';
 const app: Application = express();
 
 const clientAdoresu: string = env.CLIENT_ADDRESS;
-console.log('CLIENT_ADDRESS:', clientAdoresu); 
 const allowedOrigins = [clientAdoresu];
 
 const corsOptions = {
