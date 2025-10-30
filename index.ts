@@ -28,8 +28,8 @@ function isIpInSubnet(ip: string, cidr: string): boolean {
 export const ipWhitelist = (req: Request, res: Response, next: NextFunction) => {
     const xForwardedFor = req.headers['x-forwarded-for'];
     const clientIp = Array.isArray(xForwardedFor)
-        ? xForwardedFor[0]
-        : xForwardedFor || req.socket.remoteAddress || '';
+        ? xForwardedFor[0].trim()
+        : xForwardedFor?.split(',')[0].trim() || req.socket.remoteAddress || '';
 
     const allowed = allowedIps.some(cidr => isIpInSubnet(clientIp, cidr));
 
