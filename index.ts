@@ -8,29 +8,11 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigin = env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase();
+const allowedOrigin = env.CLIENT_ADDRESS;
 
-const corsOptions = {
-    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-        if (!origin) {
-            return callback(new Error('Not allowed by CORS'));
-        }
-
-        const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
-
-        if (cleanOrigin === allowedOrigin) {
-            callback(null, true);
-        } else {
-            console.warn(`❌ CORS blocked: ${cleanOrigin} !== ${allowedOrigin}`);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-};
-
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: allowedOrigin
+}));
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
