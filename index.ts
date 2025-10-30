@@ -8,8 +8,8 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const clientAdoresu: string = env.CLIENT_ADDRESS || '';
-
+const PORT = process.env.PORT || 3000;
+const clientAdoresu: string = String(env.CLIENT_ADDRESS + ':' + PORT || '');
 
 const corsOptions = {
     origin: [clientAdoresu],
