@@ -40,6 +40,8 @@ export const ipWhitelist = (req: Request, res: Response, next: NextFunction) => 
     next();
 };
 
+app.use(ipWhitelist);
+
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
 app.use('/weatherservice', weatherRoute);
