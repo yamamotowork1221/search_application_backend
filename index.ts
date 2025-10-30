@@ -17,6 +17,7 @@ const corsOptions = {
         }
 
         const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
+
         if (cleanOrigin === allowedOrigin) {
             callback(null, true);
         } else {
@@ -24,8 +25,8 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
 };
 
