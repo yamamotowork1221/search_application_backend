@@ -8,10 +8,20 @@ import cors from 'cors';
 
 const app: Application = express();
 
-app.use(cors({
-  origin: 'https://search-application-frontend.onrender.com',
-  methods: ['GET','POST','PUT','DELETE']
-}));
+const allowedOrigin = 'https://search-application-frontend.onrender.com';
+
+const corsOptions = {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        if (!origin || origin === allowedOrigin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['GET', 'POST'], // フロントエンドから通すメソッドだけ
+};
+
+app.use(cors(corsOptions));
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
