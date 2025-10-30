@@ -10,9 +10,16 @@ const app: Application = express();
 
 const allowedOrigins = [process.env.CLIENT_ADDRESS as string];
 
-app.use(cors({
-    origin: 'https://search-application-frontend.onrender.com'
-}));
+app.use((req, res, next) => {
+    const allowedOrigins = ['https://search-application-frontend.onrender.com'];
+    const origin = req.headers.origin;
+
+    if (origin && allowedOrigins.includes(origin)) {
+        next();
+    } else {
+        res.status(403).send('Forbidden');
+    }
+});
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
