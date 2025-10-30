@@ -8,17 +8,14 @@ import cors from 'cors';
 
 const app: Application = express();
 
-app.use(
-    cors({
-        origin: 'https://search-application-frontend.onrender.com',
-        credentials: true,
-    })
-);
-
-app.options('*', cors({
+const corsOptions = {
     origin: 'https://search-application-frontend.onrender.com',
     credentials: true,
-}));
+};
+
+app.options(/.*/, cors(corsOptions));
+
+app.use(cors(corsOptions));
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
