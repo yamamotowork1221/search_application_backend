@@ -8,18 +8,20 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigins = [env.CLIENT_ADDRESS];
+const allowedOrigins = [process.env.CLIENT_ADDRESS as string];
 
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+const corsOptions: cors.CorsOptions = {
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        if (origin && allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true
-}));
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
