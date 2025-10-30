@@ -9,7 +9,7 @@ import cors from 'cors';
 const app: Application = express();
 
 const clientAdoresu: string = env.CLIENT_ADDRESS;
-const allowedOrigins = [clientAdoresu];
+const allowedOrigins = [clientAdoresu.trim()];
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
