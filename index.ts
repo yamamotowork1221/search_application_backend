@@ -1,0 +1,27 @@
+import { env } from './src/config/env.ts';
+import searchRoute from './src/routes/searchRoute.ts';
+import newsRoute from './src/routes/newsRoute.ts';
+import weatherRoute from './src/routes/weatherRoute.ts';
+import express from 'express';
+import type { Application } from 'express';
+import cors from 'cors';
+
+const app: Application = express();
+
+const clientAdoresu: string = env.CLIENT_ADDRESS || '';
+
+
+const corsOptions = {
+    origin: [clientAdoresu],
+    methods: 'GET,POST',
+    allowedHeaders: 'Content-Type, Authorization',
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.use('/searchservice', searchRoute);
+app.use('/newsservice', newsRoute);
+app.use('/weatherservice', weatherRoute);
+
+app.listen(8000, () => console.log('Example app listening on port 8000!'))
