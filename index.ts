@@ -8,10 +8,10 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigin = env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase();
-
-console.log('Request Origin:', origin);
-console.log('Allowed Origins:', allowedOrigin);
+const allowedOrigins = [
+    env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase(),
+    'http://localhost:3000', // 開発用（必要なら削除可）
+];
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
@@ -21,7 +21,9 @@ const corsOptions = {
         }
 
         const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
-        if (cleanOrigin === allowedOrigin) {
+        const isAllowed = allowedOrigins.includes(cleanOrigin);
+
+        if (isAllowed) {
             callback(null, true);
         } else {
             console.warn(`❌ CORS blocked: ${origin}`);
