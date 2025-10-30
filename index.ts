@@ -8,11 +8,10 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const PORT = process.env.PORT || 3000;
-const clientAdoresu: string = String(env.CLIENT_ADDRESS + ':' + PORT || '');
+const clientAdoresu: string = String(env.CLIENT_ADDRESS) || '';
 
 const corsOptions = {
-    origin: [clientAdoresu],
+    origin: clientAdoresu,
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
