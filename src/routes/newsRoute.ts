@@ -1,4 +1,4 @@
-import { news } from '../../src/controllers/newsController.ts'
+import { news } from '../../src/controllers/newsController'
 import express from 'express';
 
 const newsRoute = express.Router();

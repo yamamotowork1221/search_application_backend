@@ -1,6 +1,6 @@
-import { env } from '../../src/config/env.ts'
-import { gettoNewsApiConfig } from '../../src/config/config.ts'
-import { apiGetServices } from '../../src/services/apiGetServices.ts'
+import { env } from '../../src/config/env'
+import { gettoNewsApiConfig } from '../../src/config/config'
+import { apiGetServices } from '../../src/services/apiGetServices'
 import type { Request, Response } from 'express';
 
 let cache: any = null;

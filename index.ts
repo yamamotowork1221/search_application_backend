@@ -1,7 +1,7 @@
-import { env } from './src/config/env.ts';
-import searchRoute from './src/routes/searchRoute.ts';
-import newsRoute from './src/routes/newsRoute.ts';
-import weatherRoute from './src/routes/weatherRoute.ts';
+import { env } from './src/config/env';
+import searchRoute from './src/routes/searchRoute';
+import newsRoute from './src/routes/newsRoute';
+import weatherRoute from './src/routes/weatherRoute';
 import express from 'express';
 import type { Application } from 'express';
 import cors from 'cors';

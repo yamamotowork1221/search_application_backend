@@ -1,4 +1,4 @@
-import { weather } from '../../src/controllers/weatherController.ts'
+import { weather } from '../../src/controllers/weatherController'
 import express from 'express';
 
 const weatherRoute = express.Router();

@@ -1,5 +1,5 @@
-import { env } from '../../src/config/env.ts'
-import { apiGetServices } from '../../src/services/apiGetServices.ts'
+import { env } from '../../src/config/env'
+import { apiGetServices } from '../../src/services/apiGetServices'
 import type { Request, Response } from 'express';
 
 export const search = async (req: Request, res: Response) => {
