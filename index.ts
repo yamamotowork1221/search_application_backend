@@ -8,21 +8,17 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigin = 'https://search-application-frontend.onrender.com';
+app.use(
+    cors({
+        origin: 'https://search-application-frontend.onrender.com',
+        credentials: true,
+    })
+);
 
-const corsOptions: cors.CorsOptions = {
-    origin: (origin, callback) => {
-        if (origin === allowedOrigin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+app.options('*', cors({
+    origin: 'https://search-application-frontend.onrender.com',
     credentials: true,
-};
-
-app.options('*', cors(corsOptions));
-app.use(cors(corsOptions));
+}));
 
 app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
