@@ -16,7 +16,11 @@ const corsOptions = {
         if (!origin) {
             return callback(new Error('Not allowed by CORS'));
         }
-        if (allowedOrigins.includes(origin)) {
+
+        const cleanOrigin = origin.replace(/\/$/, '');
+        const isAllowed = allowedOrigins.some(o => o.replace(/\/$/, '') === cleanOrigin);
+
+        if (isAllowed) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
