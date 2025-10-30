@@ -10,8 +10,10 @@ const app: Application = express();
 
 const allowedOrigins = [
     env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase(),
-    'http://localhost:3000', // 開発用（必要なら削除可）
+    'http://localhost:3000',
 ];
+
+console.log('🌐 Request Origin:', origin);
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
