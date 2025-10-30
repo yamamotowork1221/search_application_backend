@@ -8,13 +8,15 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const clientAdoresu: string = env.CLIENT_ADDRESS;
-const allowedOrigins = [env.CLIENT_ADDRESS.trim().replace(/\/$/, '')];
+const allowedOrigins = [
+    env.CLIENT_ADDRESS.trim().replace(/\/$/, ''), // 本番フロント
+    'http://localhost:3000',                      // ローカル開発用
+];
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (!origin) {
-            return callback(new Error('CORS: Origin header missing'));
+            return callback(null, true);
         }
 
         const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
