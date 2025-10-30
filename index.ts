@@ -12,7 +12,7 @@ const allowedOrigin = 'https://search-application-frontend.onrender.com';
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
-    if (origin && origin !== allowedOrigin) {
+    if (origin !== allowedOrigin) {
         return res.status(403).json({ error: 'Forbidden origin' });
     }
     next();
