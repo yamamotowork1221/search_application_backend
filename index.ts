@@ -12,7 +12,16 @@ const clientAdoresu: string = env.CLIENT_ADDRESS;
 const allowedOrigins = [clientAdoresu];
 
 const corsOptions = {
-    origin: allowedOrigins,
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        if (!origin) {
+            return callback(new Error('Not allowed by CORS'));
+        }
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
