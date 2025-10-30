@@ -8,23 +8,17 @@ import cors from 'cors';
 
 const app: Application = express();
 
-const allowedOrigins = [
-    env.CLIENT_ADDRESS.trim().replace(/\/$/, ''), // 本番フロント
-    'http://localhost:3000',                      // ローカル開発用
-];
+const allowedOrigin = env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase();
 
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (!origin) {
-            return callback(null, true);
+            console.warn('❌ CORS blocked: Origin header missing');
+            return callback(new Error('Not allowed by CORS'));
         }
 
         const cleanOrigin = origin.replace(/\/$/, '').toLowerCase();
-        const isAllowed = allowedOrigins.some(
-            o => o.replace(/\/$/, '').toLowerCase() === cleanOrigin
-        );
-
-        if (isAllowed) {
+        if (cleanOrigin === allowedOrigin) {
             callback(null, true);
         } else {
             console.warn(`❌ CORS blocked: ${origin}`);
