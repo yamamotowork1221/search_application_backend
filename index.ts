@@ -9,9 +9,10 @@ import cors from 'cors';
 const app: Application = express();
 
 const clientAdoresu: string = env.CLIENT_ADDRESS;
+const allowedOrigins = [clientAdoresu];
 
 const corsOptions = {
-    origin: clientAdoresu,
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -23,4 +24,5 @@ app.use('/searchservice', searchRoute);
 app.use('/newsservice', newsRoute);
 app.use('/weatherservice', weatherRoute);
 
-app.listen(8000, () => console.log('Example app listening on port 8000!'))
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
