@@ -10,6 +10,9 @@ const app: Application = express();
 
 const allowedOrigin = env.CLIENT_ADDRESS.trim().replace(/\/$/, '').toLowerCase();
 
+console.log('Request Origin:', origin);
+console.log('Allowed Origins:', allowedOrigin);
+
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
         if (!origin) {
